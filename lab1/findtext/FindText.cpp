@@ -1,29 +1,42 @@
 #include "stdafx.h"
 
-int main(int argc, char * argv[])
+bool SearchString(std::string SearchStr, std::ifstream & input)
 {
-	std::ifstream input(argv[1]);
-	std::string SearchStr(argv[2]);
 	std::string CurrStr;
-	unsigned StrNumber = 1;
-	if(!input.is_open())
-	{
-		std::cout << "Failed to open " << argv[1] << " for reading\n";
-		return 1;
-	}
+	unsigned int StrNumber = 1;
 	bool stringWasFound = false;
+
 	while (std::getline(input, CurrStr))
 	{
-		if(CurrStr.find(SearchStr) != std::string::npos)
+		if (CurrStr.find(SearchStr) != std::string::npos)
 		{
 			std::cout << "Word was found on the " << StrNumber << " line." << std::endl;
 			stringWasFound = true;
 		}
 		++StrNumber;
 	}
-	if(!stringWasFound)
+
+	return stringWasFound;
+}
+
+int main(int argc, char * argv[])
+{
+	if (argc != 3)
 	{
-		std::cout << "Word was not found" << std::endl;
+		std::cout << "Invalid argument count\n" << "Usage: findtext.exe <input file> <search text>\n";
+		return 1;
+	}
+	std::ifstream input(argv[1]);
+	if(!input.is_open())
+	{
+		std::cout << "Failed to open " << argv[1] << " for reading\n";
+		return 1;
+	}
+	std::string SearchStr(argv[2]);
+	
+	if (!SearchString(SearchStr, input))
+	{
+		std::cout << "String wasn't found.";
 	}
     return 0;
 }
