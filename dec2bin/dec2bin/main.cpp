@@ -53,7 +53,7 @@ int main(int argc, char * argv[])
 		}
 		else
 		{
-			std::cout << "Incorrect input data" << std::endl;
+			std::cout << "Incorrect input data. Please enter a valid input data." << std::endl;
 			return 1;
 		}
 	}
