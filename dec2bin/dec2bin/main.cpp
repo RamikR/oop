@@ -4,8 +4,8 @@
 std::string ConvertDec2Bin(const int decNumber)
 {
 	std::string binNumber = "";
-	const int binNumberLength = 8;
-	for (int i = binNumberLength; i >= 0; i--)
+	const unsigned int binNumberLength = 7;
+	for (int i = binNumberLength; i >= 0; --i)
 	{
 		if ((1 << i) & decNumber)
 		{
@@ -19,11 +19,11 @@ std::string ConvertDec2Bin(const int decNumber)
 	return binNumber;
 }
 
-bool IsIntNumber(const char *number)
+bool IsNumber(char * str)
 {
-	while (*number)
+	for (int i = 0; i < strlen(str); ++i)
 	{
-		if (!isdigit(*number++))
+		if (!isdigit(str[i])) 
 		{
 			return false;
 		}
@@ -36,7 +36,7 @@ bool IsArgumentsExists(int argc, const int theNumberOfArguments)
 	if (argc != theNumberOfArguments)
 	{
 		std::cout << "Invalid arguments count" << std::endl
-			<< "Usage: copyfile.exe <input file> <output file>" << std::endl;
+			<< "Usage: dec2bin.exe <decNumber>" << std::endl;
 		return false;
 	};
 	return true;
@@ -46,7 +46,7 @@ int main(int argc, char * argv[])
 {
 	if (IsArgumentsExists(argc, 2))
 	{
-		if (IsIntNumber(argv[1]))
+		if (IsNumber(argv[1]))
 		{
 			std::cout << ConvertDec2Bin(atoi(argv[1])) << std::endl;
 			return 0;
