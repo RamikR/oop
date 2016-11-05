@@ -5,13 +5,11 @@ int main(int argc, const char * argv[])
 {
 	string inputString;
 
-	while(true)
+	while (!cin.eof())
 	{
 		getline(cin, inputString);
-		if (inputString == "...")
-		{
-			return 0;
-		}
-		cout << HTMLEncode(inputString);
+		cout << HTMLEncode(inputString) << endl;
 	}
+
+	return 0;
 }
