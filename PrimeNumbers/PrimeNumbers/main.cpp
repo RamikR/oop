@@ -6,28 +6,28 @@ using namespace std;
 
 set<int> GeneratePrimeNumbersSet(unsigned upperBound)
 {
-	vector<bool> primeNumber(upperBound + 1);
+	vector<bool> numbers(upperBound + 1);
 
 	for (unsigned i = 1; i <= upperBound; i++)
 	{
-		primeNumber[i] = true;
+		numbers[i] = true;
 	}
 
 	set<int> primes;
 	for (unsigned i = 2; ((i*i) <= upperBound); i++)
 	{
-		if (primeNumber[i])
+		if (numbers[i])
 		{
 			for (unsigned j = (i*i); j <= upperBound; j += i)
 			{
-				if (primeNumber[j]) primeNumber[j] = false;
+				if (numbers[j]) numbers[j] = false;
 			}
 		}
 	}
 
 	for (unsigned i = 3; i <= upperBound; i += 2)
 	{
-		if (primeNumber[i])
+		if (numbers[i])
 		{
 			primes.emplace_hint(primes.end(), i);
 		}
