@@ -1,43 +1,56 @@
+#include <iostream>
 #include "stdafx.h"
+#include <fstream>
+#include <string>
 
-bool SearchString(std::string SearchStr, std::ifstream & input)
+using namespace std;
+
+// Returns line number where difference was found or 0 if the content is equal
+
+bool CompareContent(istream & firstFile, istream & secondFile)
 {
-	std::string CurrStr;
-	unsigned int StrNumber = 1;
-	bool stringWasFound = false;
+	string string1;
+	string string2;
+	int j = 0;
 
-	while (std::getline(input, CurrStr))
+	while (getline(firstFile, string1) && getline(secondFile, string2))
 	{
-		if (CurrStr.find(SearchStr) != std::string::npos)
+		j++;
+		if (string1 != string2)
 		{
-			std::cout << "Word was found on the " << StrNumber << " line." << std::endl;
-			stringWasFound = true;
+			cout << "Files are different. Line number is " << j << endl;
+			return 1;
 		}
-		++StrNumber;
-	}
+	};
+	cout << "Files are equal" << endl;
 
-	return stringWasFound;
+	return 0;
 }
 
 int main(int argc, char * argv[])
 {
 	if (argc != 3)
 	{
-		std::cout << "Invalid argument count\n" << "Usage: findtext.exe <input file> <search text>\n";
+		cout << "Invalid arguments count" << endl
+			<< "Usage: copyfile.exe <input file> <output file>" << endl;
 		return 1;
 	}
-	std::ifstream input(argv[1]);
-	if(!input.is_open())
-	{
-		std::cout << "Failed to open " << argv[1] << " for reading\n";
-		return 1;
-	}
-	std::string SearchStr(argv[2]);
-	
-	if (!SearchString(SearchStr, input))
-	{
-		std::cout << "String wasn't found.";
-	}
-    return 0;
-}
 
+	ifstream firstFile(argv[1]);
+
+	if (!firstFile.is_open())
+	{
+		cout << "Failed to open " << argv[1] << " for reading" << endl;
+		return 1;
+	}
+
+	ifstream secondFile(argv[2]);
+
+	if (!secondFile.is_open())
+	{
+		cout << "Failed to open " << argv[2] << " for reading" << endl;
+		return 1;
+	}
+
+	return CompareContent(firstFile, secondFile);
+}
