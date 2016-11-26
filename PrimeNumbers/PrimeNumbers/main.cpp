@@ -4,35 +4,32 @@
 
 using namespace std;
 
-set<int> GeneratePrimeNumbersSet(unsigned upperBound)
+set<uint32_t> GeneratePrimeNumbersSet(int upperBound)
 {
-	vector<bool> numbers(upperBound + 1);
-
-	for (unsigned i = 1; i <= upperBound; i++)
+	vector<bool> numbers(upperBound + 1, true);
+	set<uint32_t> primes;
+	numbers[1] = false;
+	if (upperBound > 1)
 	{
-		numbers[i] = true;
+		primes.emplace_hint(primes.end(), 2);
 	}
-
-	set<int> primes;
-	for (unsigned i = 2; ((i*i) <= upperBound); i++)
+	for (int i = 2; ((i*i) <= upperBound); i++)
 	{
 		if (numbers[i])
 		{
-			for (unsigned j = (i*i); j <= upperBound; j += i)
+			for (int j = (i*i); j <= upperBound; j += i)
 			{
-				if (numbers[j]) numbers[j] = false;
+				numbers[j] = false;
 			}
 		}
 	}
-
-	for (unsigned i = 3; i <= upperBound; i += 2)
+	for (int i = 3; i <= upperBound; i += 2)
 	{
 		if (numbers[i])
 		{
 			primes.emplace_hint(primes.end(), i);
 		}
 	}
-
 	return primes;
 }
 
@@ -53,9 +50,9 @@ int main(int argc, char * argv[])
 	}
 
 	auto upperBound = atoi(argv[1]);
-	auto primes = GeneratePrimeNumbersSet(upperBound);
+	auto primeNumbers = GeneratePrimeNumbersSet(upperBound);
 
-	for (const auto prime : primes)
+	for (const auto prime : primeNumbers)
 	{
 		cout << prime << endl;
 	}
