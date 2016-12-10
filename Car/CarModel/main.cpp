@@ -53,7 +53,7 @@ int main()
 					}
 					else
 					{
-						std::cout << "	Gear can not be set\n"
+						std::cout << "	Gear can not be set\n"	
 							<< "	Wrong speed\n";
 					}
 				}
